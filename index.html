@@ -1,1 +1,367 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pontuação dos Times Brasileiros</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            width: 1080px;
+            height: 1920px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 100%;
+        }
+        .vencedor-container {
+            background-color: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 100%;
+            text-align: center;
+            margin-top: 10px;
+        }
+        .vencedor-titulo {
+            color: #2c3e50;
+            font-size: 32px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        .vencedor-info {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+        .vencedor-nome {
+            font-size: 36px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .vencedor-pontos {
+            font-size: 48px;
+            font-weight: bold;
+            color: #27ae60;
+        }
+        .trofeu {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+        }
+        .escudo-vencedor {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            font-size: 40px;
+            margin: 0 0 20px 0;
+        }
+        .instrucoes {
+            text-align: center;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #e8f4f8;
+            border-radius: 5px;
+            font-size: 24px;
+        }
+        .time-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin: 8px 0;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 5px solid #3498db;
+            transition: background-color 0.2s;
+            font-size: 28px;
+        }
+        .numero {
+            font-weight: bold;
+            color: #7f8c8d;
+            font-size: 28px;
+            min-width: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .trofeu-ranking {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+        }
+        .escudo {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .presente {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            margin-left: 10px;
+        }
+        .bola {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            margin-left: 10px;
+            display: none;
+        }
+        .gol-texto {
+            display: none;
+            color: black;
+            font-weight: bold;
+            font-style: italic;
+            font-size: 32px;
+            margin-left: 5px;
+            transform: rotate(-10deg);
+            position: relative;
+            top: -5px;
+        }
+        .pontos {
+            font-size: 36px;
+            font-weight: bold;
+            color: #2c3e50;
+            min-width: 40px;
+            text-align: right;
+        }
+        .pontos-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-left: 10px;
+        }
+        .time-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Pontuação dos Times Brasileiros</h1>
+        
+        <div class="instrucoes">
+            Clique no escudo do time para marcar pontos
+        </div>
 
+        <ul class="times-lista">
+            <li class="time-item" data-tecla="f">
+                <div class="time-info">
+                    <span class="numero">1.</span>
+                    <div>
+                        <img src="escudos/flamengo.png" alt="Escudo Flamengo" class="escudo" onclick="marcarPonto('f')">
+                    </div>
+                    <span class="nome">Flamengo</span>
+                    <img src="presentes/branca.webp" alt="Presente" class="presente">
+                    <div class="pontos-container">
+                        <div style="display: inline-flex; align-items: center;">
+                            <img src="outros/bola.webp" alt="Bola" class="bola">
+                            <span class="gol-texto">Goll!!!</span>
+                        </div>
+                        <span class="pontos">0</span>
+                    </div>
+                </div>
+            </li>
+            <li class="time-item" data-tecla="p">
+                <div class="time-info">
+                    <span class="numero">2.</span>
+                    <div>
+                        <img src="escudos/palmeiras.png" alt="Escudo Palmeiras" class="escudo" onclick="marcarPonto('p')">
+                    </div>
+                    <span class="nome">Palmeiras</span>
+                    <img src="presentes/casquinha.webp" alt="Presente" class="presente">
+                    <div class="pontos-container">
+                        <div style="display: inline-flex; align-items: center;">
+                            <img src="outros/bola.webp" alt="Bola" class="bola">
+                            <span class="gol-texto">Goll!!!</span>
+                        </div>
+                        <span class="pontos">0</span>
+                    </div>
+                </div>
+            </li>
+            <li class="time-item" data-tecla="s">
+                <div class="time-info">
+                    <span class="numero">3.</span>
+                    <div>
+                        <img src="escudos/sao-paulo.png" alt="Escudo São Paulo" class="escudo" onclick="marcarPonto('s')">
+                    </div>
+                    <span class="nome">São Paulo</span>
+                    <img src="presentes/gg.webp" alt="Presente" class="presente">
+                    <div class="pontos-container">
+                        <div style="display: inline-flex; align-items: center;">
+                            <img src="outros/bola.webp" alt="Bola" class="bola">
+                            <span class="gol-texto">Goll!!!</span>
+                        </div>
+                        <span class="pontos">0</span>
+                    </div>
+                </div>
+            </li>
+            <li class="time-item" data-tecla="b">
+                <div class="time-info">
+                    <span class="numero">4.</span>
+                    <div>
+                        <img src="escudos/botafogo.png" alt="Escudo Botafogo" class="escudo" onclick="marcarPonto('b')">
+                    </div>
+                    <span class="nome">Botafogo</span>
+                    <img src="presentes/tiktok.webp" alt="Presente" class="presente">
+                    <div class="pontos-container">
+                        <div style="display: inline-flex; align-items: center;">
+                            <img src="outros/bola.webp" alt="Bola" class="bola">
+                            <span class="gol-texto">Goll!!!</span>
+                        </div>
+                        <span class="pontos">0</span>
+                    </div>
+                </div>
+            </li>
+            <li class="time-item" data-tecla="z">
+                <div class="time-info">
+                    <span class="numero">5.</span>
+                    <div>
+                        <img src="escudos/cruzeiro.png" alt="Escudo Cruzeiro" class="escudo" onclick="marcarPonto('z')">
+                    </div>
+                    <span class="nome">Cruzeiro</span>
+                    <img src="presentes/rosa.webp" alt="Presente" class="presente">
+                    <div class="pontos-container">
+                        <div style="display: inline-flex; align-items: center;">
+                            <img src="outros/bola.webp" alt="Bola" class="bola">
+                            <span class="gol-texto">Goll!!!</span>
+                        </div>
+                        <span class="pontos">0</span>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="vencedor-container">
+        <div class="vencedor-titulo">Time Líder</div>
+        <div class="vencedor-info">
+            <img src="outros/trofeu.png" alt="Troféu" class="trofeu">
+            <img src="" alt="Escudo do Vencedor" class="escudo-vencedor" id="escudoVencedor">
+            <div class="vencedor-nome" id="nomeVencedor">-</div>
+            <div class="vencedor-pontos" id="pontosVencedor">0</div>
+        </div>
+    </div>
+
+    <script>
+        let ultimoTimePontuou = null;
+
+        function esconderTodasBolas() {
+            document.querySelectorAll('.bola').forEach(bola => {
+                bola.style.display = 'none';
+                // Esconde o texto "Goll!!!" junto com a bola
+                bola.nextElementSibling.style.display = 'none';
+            });
+        }
+
+        function mostrarBola(timeItem) {
+            esconderTodasBolas();
+            const containerBola = timeItem.querySelector('.bola').parentElement;
+            const bola = containerBola.querySelector('.bola');
+            const golTexto = containerBola.querySelector('.gol-texto');
+            
+            if (bola && golTexto) {
+                bola.style.display = 'inline-block';
+                golTexto.style.display = 'inline-block';
+            }
+        }
+
+        function atualizarNumeracao() {
+            const timesLista = document.querySelector('.times-lista');
+            const times = Array.from(timesLista.children);
+            
+            times.sort((a, b) => {
+                const pontosA = parseInt(a.querySelector('.pontos').textContent);
+                const pontosB = parseInt(b.querySelector('.pontos').textContent);
+                if (pontosB !== pontosA) {
+                    return pontosB - pontosA;
+                }
+                const nomeA = a.querySelector('.nome').textContent;
+                const nomeB = b.querySelector('.nome').textContent;
+                return nomeA.localeCompare(nomeB);
+            });
+            
+            while (timesLista.firstChild) {
+                timesLista.removeChild(timesLista.firstChild);
+            }
+            
+            times.forEach((time, index) => {
+                const numeroElement = time.querySelector('.numero');
+                if (index === 0) {
+                    numeroElement.innerHTML = '<img src="outros/trofeu.png" alt="Troféu" class="trofeu-ranking">';
+                } else {
+                    numeroElement.textContent = `${index + 1}.`;
+                }
+                timesLista.appendChild(time);
+            });
+        }
+
+        function atualizarVencedor() {
+            const times = Array.from(document.querySelectorAll('.time-item'));
+            const vencedor = times.reduce((maior, atual) => {
+                const pontosAtual = parseInt(atual.querySelector('.pontos').textContent);
+                const pontosMaior = parseInt(maior.querySelector('.pontos').textContent);
+                return pontosAtual > pontosMaior ? atual : maior;
+            }, times[0]);
+
+            const nomeVencedor = vencedor.querySelector('.nome').textContent;
+            const pontosVencedor = vencedor.querySelector('.pontos').textContent;
+            const escudoVencedor = vencedor.querySelector('.escudo').src;
+
+            document.getElementById('nomeVencedor').textContent = nomeVencedor;
+            document.getElementById('pontosVencedor').textContent = pontosVencedor;
+            document.getElementById('escudoVencedor').src = escudoVencedor;
+        }
+
+        function marcarPonto(tecla) {
+            const timeItem = document.querySelector(`.time-item[data-tecla="${tecla}"]`);
+            if (timeItem) {
+                const pontosElement = timeItem.querySelector('.pontos');
+                const pontosAtuais = parseInt(pontosElement.textContent);
+                pontosElement.textContent = pontosAtuais + 1;
+                
+                if (ultimoTimePontuou !== tecla) {
+                    mostrarBola(timeItem);
+                    ultimoTimePontuou = tecla;
+                }
+                
+                timeItem.style.backgroundColor = '#e8f4f8';
+                setTimeout(() => {
+                    timeItem.style.backgroundColor = '#f8f9fa';
+                    atualizarNumeracao();
+                }, 200);
+            }
+        }
+
+        document.addEventListener('keydown', function(event) {
+            const tecla = event.key.toLowerCase();
+            marcarPonto(tecla);
+        });
+
+        // Inicializa a ordenação
+        atualizarNumeracao();
+    </script>
+</body>
+</html> 
