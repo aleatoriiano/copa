@@ -23,6 +23,8 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
             width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
         }
         .vencedor-container {
             background-color: white;
@@ -99,6 +101,28 @@
             border-left: 5px solid #3498db;
             transition: background-color 0.2s;
             font-size: 28px;
+        }
+        .time-item.rebaixado {
+            background-color: #e53935 !important;
+            border-left: 5px solid #c62828;
+            position: relative;
+        }
+        .time-item.rebaixado .nome,
+        .time-item.rebaixado .pontos,
+        .time-item.rebaixado .numero,
+        .time-item.rebaixado .gol-texto {
+            color: white !important;
+        }
+        .time-item.lider {
+            background-color: #2e7d32 !important;
+            border-left: 5px solid #1b5e20;
+            position: relative;
+        }
+        .time-item.lider .nome,
+        .time-item.lider .pontos,
+        .time-item.lider .numero,
+        .time-item.lider .gol-texto {
+            color: white !important;
         }
         .numero {
             font-weight: bold;
@@ -311,6 +335,12 @@
                 return nomeA.localeCompare(nomeB);
             });
             
+            // Remove todas as classes primeiro
+            times.forEach(time => {
+                time.classList.remove('rebaixado');
+                time.classList.remove('lider');
+            });
+            
             while (timesLista.firstChild) {
                 timesLista.removeChild(timesLista.firstChild);
             }
@@ -319,6 +349,10 @@
                 const numeroElement = time.querySelector('.numero');
                 if (index === 0) {
                     numeroElement.innerHTML = '<img src="outros/trofeu.png" alt="Troféu" class="trofeu-ranking">';
+                    time.classList.add('lider');
+                } else if (index === times.length - 1) {
+                    numeroElement.textContent = `${index + 1}.`;
+                    time.classList.add('rebaixado');
                 } else {
                     numeroElement.textContent = `${index + 1}.`;
                 }
