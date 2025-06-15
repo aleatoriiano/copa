@@ -528,32 +528,45 @@
                 img.src = src;
             });
 
-            // Carregar pontuações salvas
-            carregarPontuacoes();
+            // Carregar pontuações e informações dos times
+            carregarDadosTimes();
         });
-        
-        function salvarPontuacoes() {
+
+        function salvarDadosTimes() {
             const times = document.querySelectorAll('.time-item');
-            const pontuacoes = {};
+            const dadosTimes = {};
             
             times.forEach(time => {
                 const tecla = time.getAttribute('data-tecla');
+                const nome = time.querySelector('.nome').textContent;
+                const escudo = time.querySelector('.escudo').src.split('/').pop();
                 const pontos = time.querySelector('.pontos').textContent;
-                pontuacoes[tecla] = pontos;
+                const presente = time.querySelector('.presente').src.split('/').pop();
+                
+                dadosTimes[tecla] = {
+                    nome: nome,
+                    escudo: escudo,
+                    pontos: pontos,
+                    presente: presente
+                };
             });
             
-            localStorage.setItem('pontuacoesTimes', JSON.stringify(pontuacoes));
+            localStorage.setItem('dadosTimes', JSON.stringify(dadosTimes));
         }
 
-        function carregarPontuacoes() {
-            const pontuacoesSalvas = localStorage.getItem('pontuacoesTimes');
-            if (pontuacoesSalvas) {
-                const pontuacoes = JSON.parse(pontuacoesSalvas);
+        function carregarDadosTimes() {
+            const dadosSalvos = localStorage.getItem('dadosTimes');
+            if (dadosSalvos) {
+                const dadosTimes = JSON.parse(dadosSalvos);
                 
-                Object.entries(pontuacoes).forEach(([tecla, pontos]) => {
+                Object.entries(dadosTimes).forEach(([tecla, dados]) => {
                     const timeItem = document.querySelector(`.time-item[data-tecla="${tecla}"]`);
                     if (timeItem) {
-                        timeItem.querySelector('.pontos').textContent = pontos;
+                        timeItem.querySelector('.nome').textContent = dados.nome;
+                        timeItem.querySelector('.escudo').src = `escudos/${dados.escudo}`;
+                        timeItem.querySelector('.escudo').alt = `Escudo ${dados.nome}`;
+                        timeItem.querySelector('.pontos').textContent = dados.pontos;
+                        timeItem.querySelector('.presente').src = `presentes/${dados.presente}`;
                     }
                 });
                 
@@ -569,7 +582,7 @@
                     time.querySelector('.pontos').textContent = '0';
                 });
                 
-                localStorage.removeItem('pontuacoesTimes');
+                salvarDadosTimes();
                 atualizarNumeracao();
                 atualizarVencedor();
                 esconderTodasBolas();
@@ -671,8 +684,8 @@
                 setTimeout(() => {
                     timeItem.style.backgroundColor = '#f8f9fa';
                     atualizarNumeracao();
-                    salvarPontuacoes(); // Salvar após cada ponto
-                    atualizarVencedor(); // Atualizar vencedor após cada ponto
+                    salvarDadosTimes();
+                    atualizarVencedor();
                 }, 200);
             }
         }
@@ -712,12 +725,10 @@
                 // Resetar o select
                 timeSelect.value = '';
                 
-                // Atualizar a ordenação
+                // Atualizar a ordenação e salvar dados
                 atualizarNumeracao();
                 atualizarVencedor();
-                
-                // Salvar as alterações
-                salvarPontuacoes();
+                salvarDadosTimes();
             }
         }
 
@@ -738,7 +749,7 @@
                 setTimeout(() => {
                     timeItem.style.backgroundColor = '';
                     atualizarNumeracao();
-                    salvarPontuacoes();
+                    salvarDadosTimes();
                     atualizarVencedor();
                 }, 200);
                 
