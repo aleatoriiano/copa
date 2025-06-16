@@ -722,6 +722,9 @@
                 escudoImg.src = `escudos/${timeValue}.png`;
                 escudoImg.alt = `Escudo ${nomeTime}`;
                 
+                // Definir os pontos para 1000
+                ultimoTime.querySelector('.pontos').textContent = '1000';
+                
                 // Resetar o select
                 timeSelect.value = '';
                 
@@ -729,6 +732,9 @@
                 atualizarNumeracao();
                 atualizarVencedor();
                 salvarDadosTimes();
+                
+                // Mostrar efeito visual da bola e "Goll!!!"
+                mostrarBola(ultimoTime);
             }
         }
 
